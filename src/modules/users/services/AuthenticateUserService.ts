@@ -2,9 +2,9 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
-import AppError from '../errors/AppError';
-import authConfig from '../config/authConfig';
-import User from '../models/User';
+import AppError from '@shared/errors/AppError';
+import authConfig from '@config/authConfig';
+import User from '../infra/typeorm/entities/User';
 
 interface RequestDTO {
   email: string;
@@ -16,7 +16,7 @@ interface ResponseDTO {
   token: string;
 }
 
-class CreateSessionService {
+class AuthenticateUserService {
   public async execute({ email, password }: RequestDTO): Promise<ResponseDTO> {
     const usersRepository = getRepository(User);
 
@@ -43,4 +43,4 @@ class CreateSessionService {
   }
 }
 
-export default CreateSessionService;
+export default AuthenticateUserService;

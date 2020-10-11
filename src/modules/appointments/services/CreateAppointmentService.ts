@@ -11,7 +11,7 @@ interface IRequestDTO {
 }
 
 class CreateAppointmentService {
-  constructor(private appointmentsRepository: IAppoitmentsRepository) { }
+  constructor(private appointmentsRepository: IAppoitmentsRepository) {}
 
   public async execute({
     provider_id,

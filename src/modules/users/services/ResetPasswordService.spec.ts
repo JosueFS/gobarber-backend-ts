@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import AppError from '@shared/errors/AppError';
 
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
@@ -9,34 +8,18 @@ import ResetPasswordService from './ResetPasswordService';
 let fakeUsersTokensRepository: FakeUsersTokensRepository;
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
-=======
-// import AppError from '@shared/errors/AppError';
-
-import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
-import FakeUsersTokensRepository from '@modules/users/repositories/fakes/FakeUsersTokensRepository';
-import ResetPasswordService from './ResetPasswordService';
-
-let fakeUsersRepository: FakeUsersRepository;
-let fakeUsersTokensRepository: FakeUsersTokensRepository;
->>>>>>> 6926b2e67a5e1a9aea6f85053f179d413ecc479b
 let resetPassword: ResetPasswordService;
 
 describe('ResetPasswordService', () => {
   beforeEach(() => {
     fakeUsersTokensRepository = new FakeUsersTokensRepository();
     fakeUsersRepository = new FakeUsersRepository();
-<<<<<<< HEAD
     fakeHashProvider = new FakeHashProvider();
-=======
->>>>>>> 6926b2e67a5e1a9aea6f85053f179d413ecc479b
 
     resetPassword = new ResetPasswordService(
       fakeUsersRepository,
       fakeUsersTokensRepository,
-<<<<<<< HEAD
       fakeHashProvider,
-=======
->>>>>>> 6926b2e67a5e1a9aea6f85053f179d413ecc479b
     );
   });
 
@@ -49,11 +32,8 @@ describe('ResetPasswordService', () => {
 
     const { token } = await fakeUsersTokensRepository.generate(user.id);
 
-<<<<<<< HEAD
     const generateHash = jest.spyOn(fakeHashProvider, 'generateHash');
 
-=======
->>>>>>> 6926b2e67a5e1a9aea6f85053f179d413ecc479b
     await resetPassword.execute({
       password: '123123',
       token,
@@ -61,7 +41,6 @@ describe('ResetPasswordService', () => {
 
     const updatedUser = await fakeUsersRepository.findById(user.id);
 
-<<<<<<< HEAD
     expect(generateHash).toHaveBeenCalledWith('123123');
     expect(updatedUser?.password).toBe('123123');
   });
@@ -110,8 +89,4 @@ describe('ResetPasswordService', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
-=======
-    expect(updatedUser?.password).toBe('123123');
-  });
->>>>>>> 6926b2e67a5e1a9aea6f85053f179d413ecc479b
 });

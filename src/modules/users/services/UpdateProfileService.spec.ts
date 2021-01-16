@@ -36,6 +36,16 @@ describe('UpdateProfileService', () => {
     expect(updatedUser.email).toBe('newjohn@example.com');
   });
 
+  it('should not be able to show the profile', async () => {
+    await expect(
+      updateProfile.execute({
+        user_id: 'non-existing-user',
+        name: 'New John',
+        email: 'newjohn@example.com',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
   it('should not be able to change to email already used', async () => {
     await fakeUsersRepository.create({
       name: 'John Doe',

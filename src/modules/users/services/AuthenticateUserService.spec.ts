@@ -48,7 +48,7 @@ describe('AuthenticateUser', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should be able to authenticate with incorrect password', async () => {
+  it('should not be able to authenticate with incorrect password', async () => {
     await createUser.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',

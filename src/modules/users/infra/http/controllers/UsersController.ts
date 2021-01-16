@@ -18,8 +18,6 @@ export default class UsersController {
 
     newUser.password = '';
 
-    console.log(newUser);
-
     return response.json(newUser);
   }
 }

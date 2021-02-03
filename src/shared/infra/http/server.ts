@@ -1,6 +1,7 @@
 import 'reflect-metadata';
-import { errors } from 'celebrate';
+import 'dotenv/config';
 
+import { errors } from 'celebrate';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'express-async-errors';

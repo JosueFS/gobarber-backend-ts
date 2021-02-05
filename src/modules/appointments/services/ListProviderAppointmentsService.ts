@@ -2,8 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
-
-// import User from '@modules/users/infra/typeorm/entities/User';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
 interface IRequest {
   provider_id: string;
@@ -17,6 +16,9 @@ class ListProviderAppointmentsService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
@@ -25,14 +27,25 @@ class ListProviderAppointmentsService {
     year,
     month,
   }: IRequest): Promise<Appointment[]> {
-    const appointments = await this.appointmentsRepository.findAllDayFromProvider(
-      {
+    const cacheKey = `provider-appointments:${provider_id}:${year}-${month}-${day}`;
+
+    let appointments = await this.cacheProvider.recover<Appointment[]>(
+      cacheKey,
+    );
+
+    if (!appointments) {
+      appointments = await this.appointmentsRepository.findAllDayFromProvider({
         provider_id,
         day,
         month,
         year,
-      },
-    );
+      });
+      console.log('Buscou do Banco');
+
+      await this.cacheProvider.save(cacheKey, appointments);
+    }
+
+    console.log(cacheKey);
 
     return appointments;
   }

@@ -52,7 +52,7 @@ class ListProviderMonthAvailabilityService {
         day,
         available:
           appointmentsInDay.length < 10 &&
-          isAfter(new Date(year, month, day, 23, 59, 59), Date.now()),
+          isAfter(new Date(year, month - 1, day, 23, 59, 59), Date.now()),
       };
     });
 
